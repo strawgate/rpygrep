@@ -1,8 +1,14 @@
 [project]
 name = "rpygrep"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python wrapper for ripgrep"
 readme = "README.md"
+authors = [
+    { name = "Strawgate", email = "williamseaston@gmail.com" }
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+]
 requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.10.6",

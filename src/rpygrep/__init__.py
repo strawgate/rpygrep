@@ -1,3 +1,3 @@
-from rpygrep.base import RipGrepFind, RipGrepSearch, RipGrepSearchResult
+from rpygrep.base import RipGrepFind, RipGrepSearch
 
-__all__ = ["RipGrepFind", "RipGrepSearch", "RipGrepSearchResult"]
+__all__ = ["RipGrepFind", "RipGrepSearch"]

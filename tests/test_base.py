@@ -10,7 +10,8 @@ from syrupy.assertion import SnapshotAssertion
 from syrupy.extensions.json import JSONSnapshotExtension
 from syrupy.filters import props
 
-from rpygrep import RipGrepFind, RipGrepSearch, RipGrepSearchResult
+from rpygrep import RipGrepFind, RipGrepSearch
+from rpygrep.types import RipGrepSearchResult
 
 
 # Helper function to create test files
