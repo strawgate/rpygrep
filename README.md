@@ -6,7 +6,7 @@ Used in the [Filesystem Operations MCP Server](https://github.com/strawgate/py-m
 
 ## Features
 
-*   **Fluent API**: Build `ripgrep` commands using method chaining.
+*   **Fluent API**: Build `ripgrep` commands using method chaining or don't, up to you.
 *   **Type Safety**: Uses Pydantic models to ensure type safety and validation of the `ripgrep` output.
 *   **File Finding & Content Searching**: Dedicated classes (`RipGrepFind` and `RipGrepSearch`) for different `ripgrep` modes. RipGrepFind returns Pathlib `Path` objects, RipGrepSearch returns `RipGrepSearchResult` objects.
 *   **Synchronous & Asynchronous Execution**: Supports both `run()` and `arun()` methods for flexible integration.
@@ -17,7 +17,7 @@ Used in the [Filesystem Operations MCP Server](https://github.com/strawgate/py-m
 
 ```python
 ripgrep = (
-    self._ripgrep_find.include_types(included_types or [])
+    RipGrepFind.include_types(included_types or [])
     .exclude_types(excluded_types or [])
     .include_globs(included_globs or [])
     .exclude_globs(excluded_globs or [])
@@ -30,7 +30,7 @@ for path in ripgrep.run():
 
 ```python
 ripgrep = (
-    self._ripgrep_search.include_types(included_types or [])
+    RipGrepSearch.include_types(included_types or [])
     .add_safe_defaults()
     .exclude_types(excluded_types or [])
     .include_globs(included_globs or [])
