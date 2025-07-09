@@ -121,10 +121,6 @@ class TestRipGrepSearch:
     def ripgrep_search(self, temp_dir: Path):
         return RipGrepSearch(working_directory=temp_dir)
 
-    @pytest.fixture
-    def ripgrep_benchmark(self):
-        return RipGrepSearch(working_directory=Path() / "playground/beats")
-
     def test_ripgrep_search(self, ripgrep_search: RipGrepSearch, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_search.add_pattern("hello")
         results = run_search(ripgrep_search)
@@ -177,26 +173,6 @@ class TestRipGrepSearch:
 
         assert len(results) == 3
         assert prepare_for_snapshot(results) == ripgrep_snapshot
-
-    def test_beats_ripgrep_search(self, ripgrep_benchmark: RipGrepSearch):
-        _ = ripgrep_benchmark.add_pattern("la")
-
-        def run_search():
-            return list(ripgrep_benchmark.run())
-
-        results = run_search()
-
-        assert len(results) == 11244
-
-    def test_beats_ripgrep_search_direct(self, ripgrep_benchmark: RipGrepSearch):
-        _ = ripgrep_benchmark.add_pattern("la")
-
-        def run_search():
-            return list(ripgrep_benchmark.run_direct())
-
-        results = run_search()
-
-        assert len(results) == 163575
 
 
 class TestRipGrepFind:

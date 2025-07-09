@@ -1,0 +1,110 @@
+[
+  {
+    "begin": {
+      "data": {
+        "path": {
+          "text": "subdir/script_with_hello.sh"
+        }
+      },
+      "type": "begin"
+    },
+    "context": [],
+    "end": {
+      "data": {
+        "binary_offset": null,
+        "path": {
+          "text": "subdir/script_with_hello.sh"
+        },
+        "stats": {
+          "bytes_printed": 274,
+          "bytes_searched": 12,
+          "matched_lines": 1,
+          "matches": 1,
+          "searches": 1,
+          "searches_with_match": 1
+        }
+      },
+      "type": "end"
+    },
+    "matches": [
+      {
+        "data": {
+          "absolute_offset": 12,
+          "line_number": 2,
+          "lines": {
+            "bytes": null,
+            "text": "echo 'Hello'"
+          },
+          "path": {
+            "text": "subdir/script_with_hello.sh"
+          },
+          "submatches": [
+            {
+              "end": 11,
+              "match": {
+                "text": "Hello"
+              },
+              "start": 6
+            }
+          ]
+        },
+        "type": "match"
+      }
+    ],
+    "path": "PosixPath('subdir/script_with_hello.sh')"
+  },
+  {
+    "begin": {
+      "data": {
+        "path": {
+          "text": "test_with_Hello_World.txt"
+        }
+      },
+      "type": "begin"
+    },
+    "context": [],
+    "end": {
+      "data": {
+        "binary_offset": null,
+        "path": {
+          "text": "test_with_Hello_World.txt"
+        },
+        "stats": {
+          "bytes_printed": 269,
+          "bytes_searched": 0,
+          "matched_lines": 1,
+          "matches": 1,
+          "searches": 1,
+          "searches_with_match": 1
+        }
+      },
+      "type": "end"
+    },
+    "matches": [
+      {
+        "data": {
+          "absolute_offset": 0,
+          "line_number": 1,
+          "lines": {
+            "bytes": null,
+            "text": "Hello, World!"
+          },
+          "path": {
+            "text": "test_with_Hello_World.txt"
+          },
+          "submatches": [
+            {
+              "end": 5,
+              "match": {
+                "text": "Hello"
+              },
+              "start": 0
+            }
+          ]
+        },
+        "type": "match"
+      }
+    ],
+    "path": "PosixPath('test_with_Hello_World.txt')"
+  }
+]

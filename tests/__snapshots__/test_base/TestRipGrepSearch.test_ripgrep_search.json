@@ -1,0 +1,79 @@
+[
+  {
+    "begin": {
+      "data": {
+        "path": {
+          "text": "code_with_hello_world.py"
+        }
+      },
+      "type": "begin"
+    },
+    "context": [],
+    "end": {
+      "data": {
+        "binary_offset": null,
+        "path": {
+          "text": "code_with_hello_world.py"
+        },
+        "stats": {
+          "bytes_printed": 482,
+          "bytes_searched": 39,
+          "matched_lines": 2,
+          "matches": 2,
+          "searches": 1,
+          "searches_with_match": 1
+        }
+      },
+      "type": "end"
+    },
+    "matches": [
+      {
+        "data": {
+          "absolute_offset": 0,
+          "line_number": 1,
+          "lines": {
+            "bytes": null,
+            "text": "def hello():\n"
+          },
+          "path": {
+            "text": "code_with_hello_world.py"
+          },
+          "submatches": [
+            {
+              "end": 9,
+              "match": {
+                "text": "hello"
+              },
+              "start": 4
+            }
+          ]
+        },
+        "type": "match"
+      },
+      {
+        "data": {
+          "absolute_offset": 13,
+          "line_number": 2,
+          "lines": {
+            "bytes": null,
+            "text": "    print('hello, world!')"
+          },
+          "path": {
+            "text": "code_with_hello_world.py"
+          },
+          "submatches": [
+            {
+              "end": 16,
+              "match": {
+                "text": "hello"
+              },
+              "start": 11
+            }
+          ]
+        },
+        "type": "match"
+      }
+    ],
+    "path": "PosixPath('code_with_hello_world.py')"
+  }
+]

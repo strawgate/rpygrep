@@ -1,0 +1,6 @@
+[
+  "PosixPath('data.json')",
+  "PosixPath('subdir/nested.txt')",
+  "PosixPath('subdir/script_with_hello.sh')",
+  "PosixPath('test_with_Hello_World.txt')"
+]

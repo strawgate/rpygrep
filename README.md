@@ -2,6 +2,8 @@
 
 `rpygrep` is a Python library that provides a convenient and type-safe interface for interacting with the `ripgrep` command-line utility. It allows you to programmatically construct `ripgrep` commands for finding files and searching content, and then parse the structured JSON output into Python objects.
 
+Used in the [Filesystem Operations MCP Server](https://github.com/strawgate/py-mcp-collection/tree/main/filesystem-operations-mcp).
+
 ## Features
 
 *   **Fluent API**: Build `ripgrep` commands using method chaining.
