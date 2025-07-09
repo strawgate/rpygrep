@@ -1,13 +1,14 @@
 # rpygrep: A Pythonic ripgrep Wrapper
 
-`rpygrep` is a Python library that provides a convenient and type-safe interface for interacting with the `ripgrep` command-line utility. It allows you to programmatically construct `ripgrep` commands for finding files and searching content, and then parse the structured JSON output into Python objects.
+`rpygrep` is a strongly-typed Python library for interacting with the `ripgrep` command-line utility. It allows you to programmatically construct `ripgrep` commands for finding files and searching content. It provides syncronous and asyncronous interfaces and generator for results.
 
 Used in the [Filesystem Operations MCP Server](https://github.com/strawgate/py-mcp-collection/tree/main/filesystem-operations-mcp).
 
 ## Features
 
 *   **Fluent API**: Build `ripgrep` commands using method chaining.
-*   **File Finding & Content Searching**: Dedicated classes (`RipGrepFind` and `RipGrepSearch`) for different `ripgrep` modes.
+*   **Type Safety**: Uses Pydantic models to ensure type safety and validation of the `ripgrep` output.
+*   **File Finding & Content Searching**: Dedicated classes (`RipGrepFind` and `RipGrepSearch`) for different `ripgrep` modes. RipGrepFind returns Pathlib `Path` objects, RipGrepSearch returns `RipGrepSearchResult` objects.
 *   **Synchronous & Asynchronous Execution**: Supports both `run()` and `arun()` methods for flexible integration.
 *   **Structured Output**: Automatically parses `ripgrep`'s JSON output into rich Python data classes, making results easy to access and manipulate.
 *   **Comprehensive Options**: Control over a wide range of `ripgrep` options, including case sensitivity, glob patterns, file types, context lines, maximum depth, and more.
@@ -23,7 +24,8 @@ ripgrep = (
     .max_depth(max_depth)
 )
 
-ripgrep.run()
+for path in ripgrep.run():
+    print(path)
 ```
 
 ```python
@@ -41,7 +43,8 @@ ripgrep = (
     .case_sensitive(case_sensitive)
 )
 
-await ripgrep.arun()
+async for result in ripgrep.arun():
+    print(result)
 ```
 
 ## Prerequisites
