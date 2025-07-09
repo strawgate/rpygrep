@@ -1,0 +1,113 @@
+[project]
+name = "rpygrep"
+version = "0.1.0"
+description = "A Python wrapper for ripgrep"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.10.6",
+    "aiofiles>=24.1.0",
+    "ripgrep>=14.1.0",
+]
+
+[tool.poetry]
+packages = [
+    { include = "rpygrep", from = "src" }
+]
+[tool.hatch.metadata]
+allow-direct-references=true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[dependency-groups]
+dev = [
+  "pytest",
+  "pytest-mock",
+  "pytest-asyncio",
+  "ruff",
+  "basedpyright>=1.29.4",
+  "syrupy>=4.9.1",
+  "deepdiff>=8.5.0",
+  "pydantic>=2.11.7",
+]
+lint = [
+  "ruff"
+]
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning>=0.7.0"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py310"
+extend-exclude = [
+    "**/archived/**",
+]
+lint.fixable = ["ALL"]
+lint.ignore = [
+    "COM812",
+    "PLR0913", # Too many arguments, MCP Servers have a lot of arguments, OKAY?!
+]
+
+
+lint.extend-select = [
+    "A",
+    "ARG",
+    "B",
+    "C4",
+    "COM",
+    "DTZ",
+    "E",
+    "EM",
+    "F",
+    "FURB",
+    "I",
+    "LOG",
+    "N",
+    "PERF",
+    "PIE",
+    "PLR",
+    "PLW",
+    "PT",
+    "PTH",
+    "Q",
+    "RET",
+    "RSE",
+    "RUF",
+    "S",
+    "SIM",
+    "TC",
+    "TID",
+    "TRY",
+    "UP",
+    "W",
+]
+
+line-length = 140
+
+
+[tool.ruff.lint.extend-per-file-ignores]
+"**/tests/*.py" = [
+    "S101", # Ignore asserts
+    "DTZ005", # Ignore datetime.UTC
+    "PLR2004", # Ignore magic values
+    "E501", # Ignore line length
+]
+[tool.pyright]
+pythonVersion = "3.13"
+extraPaths = ["src/"]
+include = ["src/"]
+exclude = [
+    "**/archive/**",
+    "**/node_modules/**",
+    "**/__pycache__/**",
+    "**/.venv/**",
+    ".venv",
+    "**/.pytest_cache/**",
+    "**/.ruff_cache/**",
+    "**/uv/python/**",
+]
+reportMissingTypeStubs = false
+reportExplicitAny = false
