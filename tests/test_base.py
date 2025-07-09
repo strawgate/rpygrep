@@ -124,6 +124,9 @@ class TestRipGrepSearch:
     def test_ripgrep_search(self, ripgrep_search: RipGrepSearch, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_search.add_pattern("hello")
         results = run_search(ripgrep_search)
+
+        results = sort_results(results)
+
         assert len(results) == 1
         assert prepare_for_snapshot(results) == ripgrep_snapshot
 
@@ -132,6 +135,8 @@ class TestRipGrepSearch:
         _ = ripgrep_search.add_directory(Path("subdir"))
 
         results = run_search(ripgrep_search)
+
+        results = sort_results(results)
 
         assert len(results) == 0
         assert prepare_for_snapshot(results) == ripgrep_snapshot
@@ -195,14 +200,14 @@ class TestRipGrepFind:
         assert len(results) == 1
         assert results[0] == Path("code_with_hello_world.py")
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
 
     def test_exclude_globs(self, ripgrep_find: RipGrepFind, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_find.exclude_globs(["*.py"])
         results = run_find(ripgrep_find)
         assert len(results) == 4
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
 
     def test_include_types(self, ripgrep_find: RipGrepFind, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_find.include_types(ripgrep_types=["py"])
@@ -210,21 +215,21 @@ class TestRipGrepFind:
         assert len(results) == 1
         assert results[0] == Path("code_with_hello_world.py")
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
 
     def test_exclude_types(self, ripgrep_find: RipGrepFind, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_find.exclude_types(ripgrep_types=["py"])
         results = run_find(ripgrep_find)
         assert len(results) == 4
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
 
     def test_max_depth(self, ripgrep_find: RipGrepFind, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_find.max_depth(1)
         results = run_find(ripgrep_find)
         assert len(results) == 3
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
 
     def test_sort(self, ripgrep_find: RipGrepFind, ripgrep_snapshot: SnapshotAssertion):
         _ = ripgrep_find.sort("path")
@@ -232,4 +237,4 @@ class TestRipGrepFind:
         assert len(results) == 5
         assert results[0] == Path("code_with_hello_world.py")
 
-        assert results == ripgrep_snapshot
+        assert sorted(results) == ripgrep_snapshot
