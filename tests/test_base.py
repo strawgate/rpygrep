@@ -180,6 +180,46 @@ class TestRipGrepSearch:
         assert len(results) == 3
         assert prepare_for_snapshot(results) == ripgrep_snapshot
 
+    async def test_case_lock(self, ripgrep_search: RipGrepSearch, ripgrep_snapshot: SnapshotAssertion):
+                
+        excluded_types = [
+            "avro",
+            "brotli",
+            "bzip2",
+            "cbor",
+            "flatbuffers",
+            "gzip",
+            "lz4",
+            "lzma",
+            "pdf",
+            "protobuf",
+            "thrift",
+            "xz",
+            "zstd",
+            "lock",
+            "minified",
+            "jupyter",
+            "log",
+            "postscript",
+            "svg",
+            "usd","csv", "jsonl", "json", "xml", "yaml", "toml"]
+        
+        _ = (ripgrep_search.add_safe_defaults()
+            .exclude_types(excluded_types)
+            .include_globs(None or [])
+            .exclude_globs(None or [])
+            .before_context(0)
+            .after_context(0)
+            .add_patterns([""])
+            .max_depth(100)
+            .max_count(100)
+            .case_sensitive(True)
+        )
+        iterator = ripgrep_search.arun()
+
+        async for result in iterator:
+            print(result)
+
 
 class TestRipGrepFind:
     def test_init(self, temp_dir: Path):

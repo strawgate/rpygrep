@@ -3,7 +3,7 @@
     "begin": {
       "data": {
         "path": {
-          "text": "subdir/script_with_hello.sh"
+          "text": "./subdir/script_with_hello.sh"
         }
       },
       "type": "begin"
@@ -13,10 +13,10 @@
       "data": {
         "binary_offset": null,
         "path": {
-          "text": "subdir/script_with_hello.sh"
+          "text": "./subdir/script_with_hello.sh"
         },
         "stats": {
-          "bytes_printed": 274,
+          "bytes_printed": 278,
           "bytes_searched": 12,
           "matched_lines": 1,
           "matches": 1,
@@ -36,7 +36,7 @@
             "text": "echo 'Hello'"
           },
           "path": {
-            "text": "subdir/script_with_hello.sh"
+            "text": "./subdir/script_with_hello.sh"
           },
           "submatches": [
             {
@@ -57,7 +57,7 @@
     "begin": {
       "data": {
         "path": {
-          "text": "test_with_Hello_World.txt"
+          "text": "./test_with_Hello_World.txt"
         }
       },
       "type": "begin"
@@ -67,10 +67,10 @@
       "data": {
         "binary_offset": null,
         "path": {
-          "text": "test_with_Hello_World.txt"
+          "text": "./test_with_Hello_World.txt"
         },
         "stats": {
-          "bytes_printed": 269,
+          "bytes_printed": 273,
           "bytes_searched": 0,
           "matched_lines": 1,
           "matches": 1,
@@ -90,7 +90,7 @@
             "text": "Hello, World!"
           },
           "path": {
-            "text": "test_with_Hello_World.txt"
+            "text": "./test_with_Hello_World.txt"
           },
           "submatches": [
             {
