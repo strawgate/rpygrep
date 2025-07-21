@@ -1,6 +1,6 @@
 [project]
 name = "rpygrep"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Python wrapper for ripgrep"
 readme = "README.md"
 authors = [

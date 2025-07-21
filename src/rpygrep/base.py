@@ -116,6 +116,9 @@ class BaseRipGrep(BaseModel, ABC):  # pyright: ignore[reportUnsafeMultipleInheri
 
     def _targets_str(self) -> list[str]:
         """Get the targets as a list of strings."""
+        if not self.targets:
+            self.targets = [Path()]
+
         return [str(target) for target in self.targets]
 
     @abstractmethod
