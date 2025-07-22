@@ -3,7 +3,7 @@
     "begin": {
       "data": {
         "path": {
-          "text": "./code_with_hello_world.py"
+          "text": "code_with_hello_world.py"
         }
       },
       "type": "begin"
@@ -13,10 +13,10 @@
       "data": {
         "binary_offset": null,
         "path": {
-          "text": "./code_with_hello_world.py"
+          "text": "code_with_hello_world.py"
         },
         "stats": {
-          "bytes_printed": 488,
+          "bytes_printed": 482,
           "bytes_searched": 39,
           "matched_lines": 2,
           "matches": 2,
@@ -36,7 +36,7 @@
             "text": "def hello():\n"
           },
           "path": {
-            "text": "./code_with_hello_world.py"
+            "text": "code_with_hello_world.py"
           },
           "submatches": [
             {
@@ -59,7 +59,7 @@
             "text": "    print('hello, world!')"
           },
           "path": {
-            "text": "./code_with_hello_world.py"
+            "text": "code_with_hello_world.py"
           },
           "submatches": [
             {

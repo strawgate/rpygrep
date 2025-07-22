@@ -116,8 +116,6 @@ class BaseRipGrep(BaseModel, ABC):  # pyright: ignore[reportUnsafeMultipleInheri
 
     def _targets_str(self) -> list[str]:
         """Get the targets as a list of strings."""
-        if not self.targets:
-            self.targets = [Path()]
 
         return [str(target) for target in self.targets]
 
@@ -160,7 +158,14 @@ class RipGrepFind(BaseRipGrep):
 
         cli: list[str] = self.compile()
 
-        with subprocess.Popen(cli, cwd=self.working_directory, stdout=subprocess.PIPE, text=True, universal_newlines=True) as process:  # noqa: S603
+        with subprocess.Popen(  # noqa: S603
+            cli,
+            cwd=self.working_directory,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            text=True,
+            universal_newlines=True,
+        ) as process:
             if process.stdout is None:
                 msg = "No stdout from ripgrep process"
                 raise RuntimeError(msg)
@@ -273,7 +278,14 @@ class RipGrepSearch(BaseRipGrep):
         cli: list[str] = self.compile()
 
         # We need to iterate over the lines as they are written to stdout:
-        with subprocess.Popen(cli, cwd=self.working_directory, stdout=subprocess.PIPE, text=True, errors="ignore") as process:  # noqa: S603
+        with subprocess.Popen(  # noqa: S603
+            cli,
+            cwd=self.working_directory,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            text=True,
+            errors="ignore",
+        ) as process:
             if process.stdout is None:
                 msg = "No stdout from ripgrep process"
                 raise RuntimeError(msg)
@@ -292,6 +304,7 @@ class RipGrepSearch(BaseRipGrep):
             cli[0],
             *cli[1:],
             cwd=self.working_directory,
+            stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             limit=128 * 1024 * 1024,  # 128kb
         )
