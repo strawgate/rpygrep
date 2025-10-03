@@ -4,5 +4,6 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "pyright.analysis.typeCheckingMode": "recommended"
+    "pyright.analysis.typeCheckingMode": "recommended",
+    "go.testExplorer.enable": false
 }

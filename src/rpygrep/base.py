@@ -225,7 +225,7 @@ class RipGrepSearch(BaseRipGrep):
 
     def add_patterns(self, patterns: list[str]) -> Self:
         """Add patterns to the ripgrep command."""
-        self.multiple_options.extend(f"--regexp={pattern}" for pattern in patterns)
+        [self.add_pattern(pattern) for pattern in patterns]
         return self
 
     def add_pattern(self, pattern: str) -> Self:
@@ -266,6 +266,11 @@ class RipGrepSearch(BaseRipGrep):
     def max_file_size(self, size: int) -> Self:
         """Set the maximum file size to search."""
         self.multiple_options.append(f"--max-filesize={size}")
+        return self
+
+    def patterns_are_not_regex(self) -> Self:
+        """Set the patterns to be treated as fixed strings."""
+        self.multiple_options.append("--fixed-strings")
         return self
 
     def as_json(self) -> Self:
@@ -319,7 +324,7 @@ class RipGrepSearch(BaseRipGrep):
             yield line
 
     @override
-    def run(self, exclude_submatches: bool = False) -> Iterator["RipGrepSearchResult"]:
+    def run(self) -> Iterator["RipGrepSearchResult"]:
         """Run the ripgrep command and return the result."""
 
         _ = self.as_json()
@@ -331,7 +336,7 @@ class RipGrepSearch(BaseRipGrep):
                 yield result
 
     @override
-    async def arun(self, exclude_submatches: bool = False) -> AsyncIterator["RipGrepSearchResult"]:
+    async def arun(self) -> AsyncIterator["RipGrepSearchResult"]:
         """Run the ripgrep command and return the result."""
 
         _ = self.as_json()
@@ -348,8 +353,6 @@ class ResultProcessor:
     matches: list["RipGrepMatch"]
     context: list["RipGrepContext"]
     end: "RipGrepEnd | None"
-
-    timers: dict[str, float] = Field(default_factory=dict)
 
     def __init__(self) -> None:
         self.begin = None
