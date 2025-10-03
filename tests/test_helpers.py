@@ -2,7 +2,7 @@ from pathlib import PosixPath
 
 from inline_snapshot import snapshot
 
-from rpygrep.helpers import FileEntryMatch, FileWithMatches
+from rpygrep.helpers import MatchedFile, MatchedLine
 from rpygrep.types import (
     RipGrepBegin,
     RipGrepBeginData,
@@ -65,10 +65,10 @@ def test_conversion():
         ),
     )
 
-    file_entry_matches: FileWithMatches = FileWithMatches.from_search_result(result, 0, 0)
-    assert file_entry_matches == snapshot(
-        FileWithMatches(
+    matched_file: MatchedFile = MatchedFile.from_search_result(result, 0, 0)
+    assert matched_file == snapshot(
+        MatchedFile(
             path=PosixPath("code_with_hello_world.py"),
-            matches=[FileEntryMatch(match={1: "def hello():"}), FileEntryMatch(match={2: "    print('hello, world!')"})],
+            matched_lines=[MatchedLine(match={1: "def hello():"}), MatchedLine(match={2: "    print('hello, world!')"})],
         )
     )

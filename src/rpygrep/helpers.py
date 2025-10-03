@@ -6,7 +6,7 @@ from rpygrep.types import RipGrepContext, RipGrepMatch, RipGrepSearchResult
 
 
 @dataclass(frozen=True)
-class FileEntryMatch:
+class MatchedLine:
     """A match in a file entry."""
 
     before: dict[int, str] = field(default_factory=dict)
@@ -20,13 +20,13 @@ class FileEntryMatch:
 
 
 @dataclass(frozen=True)
-class FileWithMatches:
+class MatchedFile:
     """A file with matches."""
 
     path: Path
     """The path to the file that matched the pattern."""
 
-    matches: list[FileEntryMatch]
+    matched_lines: list[MatchedLine]
 
     @classmethod
     def from_search_results(
@@ -46,7 +46,7 @@ class FileWithMatches:
 
         matches_by_line_number: dict[int, RipGrepMatch] = {match.data.line_number: match for match in search_result.matches}
 
-        file_entry_matches: list[FileEntryMatch] = []
+        matched_lines: list[MatchedLine] = []
 
         for line_match in search_result.matches:
             if not line_match.data.lines.text:
@@ -81,12 +81,12 @@ class FileWithMatches:
                         elif include_empty_lines:
                             after_context_lines[line_number] = ""
 
-            file_entry_matches.append(
-                FileEntryMatch(
+            matched_lines.append(
+                MatchedLine(
                     before=before_context_lines,
                     match={line_match.data.line_number: line_match.data.lines.text.rstrip()},
                     after=after_context_lines,
                 )
             )
 
-        return cls(path=Path(search_result.path), matches=file_entry_matches)
+        return cls(path=Path(search_result.path), matched_lines=matched_lines)

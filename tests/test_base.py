@@ -9,7 +9,7 @@ from inline_snapshot import snapshot
 from pydantic import TypeAdapter
 
 from rpygrep import RipGrepFind, RipGrepSearch
-from rpygrep.helpers import FileEntryMatch, FileWithMatches
+from rpygrep.helpers import MatchedFile, MatchedLine
 from rpygrep.types import (
     RipGrepSearchResult,
 )
@@ -497,18 +497,18 @@ class TestRipGrepSearch:
 
         result = run_search(ripgrep_search)
 
-        match = FileWithMatches.from_search_results(result, 5, 5)
+        match = MatchedFile.from_search_results(result, 5, 5)
         assert match == snapshot(
             [
-                FileWithMatches(
+                MatchedFile(
                     path=PosixPath("hello_world.go"),
-                    matches=[
-                        FileEntryMatch(
+                    matched_lines=[
+                        MatchedLine(
                             before={3: 'import "fmt"', 5: "// A Hello World program in Go", 6: "func main() {"},
                             match={7: "\thello()"},
                             after={8: "}"},
                         ),
-                        FileEntryMatch(
+                        MatchedLine(
                             match={10: "func hello() {"},
                             after={
                                 11: '\tfmt.Println("H")',
@@ -523,18 +523,18 @@ class TestRipGrepSearch:
             ]
         )
 
-        match = FileWithMatches.from_search_results(search_results=result, before_context=5, after_context=5, include_empty_lines=True)
+        match = MatchedFile.from_search_results(search_results=result, before_context=5, after_context=5, include_empty_lines=True)
         assert match == snapshot(
             [
-                FileWithMatches(
+                MatchedFile(
                     path=PosixPath("hello_world.go"),
-                    matches=[
-                        FileEntryMatch(
+                    matched_lines=[
+                        MatchedLine(
                             before={2: "", 3: 'import "fmt"', 4: "", 5: "// A Hello World program in Go", 6: "func main() {"},
                             match={7: "\thello()"},
                             after={8: "}", 9: ""},
                         ),
-                        FileEntryMatch(
+                        MatchedLine(
                             match={10: "func hello() {"},
                             after={
                                 11: '\tfmt.Println("H")',
@@ -975,16 +975,16 @@ class TestHelperEdgeCases:
         _ = search.add_pattern("hello")
 
         results = list(search.run())
-        matches = FileWithMatches.from_search_results(results, before_context=0, after_context=0)
+        matches = MatchedFile.from_search_results(results, before_context=0, after_context=0)
 
         # All matches should have no before/after context
         for match in matches:
-            for entry in match.matches:
+            for entry in match.matched_lines:
                 assert len(entry.before) == 0
                 assert len(entry.after) == 0
                 assert len(entry.match) == 1  # Should have the match itself
 
     def test_empty_search_results(self):
         """Test helper with empty search results."""
-        matches = FileWithMatches.from_search_results([], before_context=5, after_context=5)
+        matches = MatchedFile.from_search_results([], before_context=5, after_context=5)
         assert matches == []
