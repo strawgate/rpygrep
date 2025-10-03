@@ -47,7 +47,7 @@ def run_search(ripgrep_search: RipGrepSearch) -> list[RipGrepSearchResult]:
     return sync_results
 
 
-def run_find(ripgrep_find: RipGrepFind) -> list[Path]:
+def run_find(ripgrep_find: RipGrepFind, sort: bool = True) -> list[Path]:
     """Run the find through the sync and async code paths and ensure the results are the same."""
     sync_results = list(ripgrep_find.run())
 
@@ -60,7 +60,7 @@ def run_find(ripgrep_find: RipGrepFind) -> list[Path]:
 
     assert diff_results == {}
 
-    return sync_results
+    return sorted(sync_results) if sort else sync_results
 
 
 def prepare_for_snapshot(results: list[RipGrepSearchResult]) -> list[str]:
@@ -889,12 +889,12 @@ class TestRipGrepFind:
         _ = ripgrep_find.exclude_globs(["*.py"])
         assert run_find(ripgrep_find) == snapshot(
             [
-                PosixPath("hello_world.sh"),
                 PosixPath("data.json"),
-                PosixPath("subdir/nested.txt"),
-                PosixPath("subdir/script_with_hello.sh"),
                 PosixPath("data.yml"),
                 PosixPath("hello_world.go"),
+                PosixPath("hello_world.sh"),
+                PosixPath("subdir/nested.txt"),
+                PosixPath("subdir/script_with_hello.sh"),
             ]
         )
 
@@ -906,24 +906,24 @@ class TestRipGrepFind:
         _ = ripgrep_find.exclude_types(ripgrep_types=["py"])
         assert run_find(ripgrep_find) == snapshot(
             [
-                PosixPath("hello_world.sh"),
                 PosixPath("data.json"),
-                PosixPath("subdir/nested.txt"),
-                PosixPath("subdir/script_with_hello.sh"),
                 PosixPath("data.yml"),
                 PosixPath("hello_world.go"),
+                PosixPath("hello_world.sh"),
+                PosixPath("subdir/nested.txt"),
+                PosixPath("subdir/script_with_hello.sh"),
             ]
         )
 
     def test_max_depth(self, ripgrep_find: RipGrepFind):
         _ = ripgrep_find.max_depth(1)
         assert run_find(ripgrep_find) == snapshot(
-            [PosixPath("hello_world.sh"), PosixPath("data.json"), PosixPath("data.yml"), PosixPath("hello_world.go")]
+            [PosixPath("data.json"), PosixPath("data.yml"), PosixPath("hello_world.go"), PosixPath("hello_world.sh")]
         )
 
     def test_sort(self, ripgrep_find: RipGrepFind):
         _ = ripgrep_find.sort("path")
-        assert run_find(ripgrep_find) == snapshot(
+        assert run_find(ripgrep_find, sort=False) == snapshot(
             [
                 PosixPath("data.json"),
                 PosixPath("data.yml"),
@@ -936,7 +936,7 @@ class TestRipGrepFind:
 
     def test_sort_descending(self, ripgrep_find: RipGrepFind):
         _ = ripgrep_find.sort("path", ascending=False)
-        results = run_find(ripgrep_find)
+        results = run_find(ripgrep_find, sort=False)
 
         # Should be in reverse alphabetical order
         paths = [str(r) for r in results]
